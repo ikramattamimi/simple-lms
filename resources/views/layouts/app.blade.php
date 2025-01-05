@@ -15,6 +15,8 @@
     <link href="{{ asset('modules/owlcarousel2/dist/assets/owl.carousel.min.css') }}" rel="stylesheet">
     <link href="{{ asset('modules/owlcarousel2/dist/assets/owl.theme.default.min.css') }}" rel="stylesheet">
 
+    @yield('styles')
+
     <!-- Template CSS -->
     <link href="{{ asset('css/style.css') }}" rel="stylesheet">
     <link href="{{ asset('css/components.css') }}" rel="stylesheet">
@@ -32,45 +34,60 @@
     </script>
 </head>
 
-<body>
+<body class="layout-3">
 
     <div id="app">
-        <div class="main-wrapper main-wrapper-1">
+        <div class="main-wrapper container">
             <!-- Navbar -->
             <div class="navbar-bg"></div>
             <nav class="navbar navbar-expand-lg main-navbar">
-                <form class="form-inline mr-auto">
-                    <ul class="navbar-nav mr-3">
-                        <li><a href="#" data-toggle="sidebar" class="nav-link nav-link-lg"><i class="fas fa-bars"></i></a></li>
-                        <li><a href="#" data-toggle="search" class="nav-link nav-link-lg d-sm-none"><i class="fas fa-search"></i></a></li>
+                <a class="navbar-brand sidebar-gone-hide" href="index.html">Iis Masriah</a>
+                <a class="nav-link sidebar-gone-show" data-toggle="sidebar" href="#"><i class="fas fa-bars"></i></a>
+                <div class="nav-collapse">
+                    <a class="sidebar-gone-show nav-collapse-toggle nav-link" href="#">
+                        <i class="fas fa-ellipsis-v"></i>
+                    </a>
+                    <ul class="navbar-nav">
+                        <li class="nav-item active"><a class="nav-link" href="#">Application</a></li>
+                        <li class="nav-item"><a class="nav-link" href="#">Report Something</a></li>
+                        <li class="nav-item"><a class="nav-link" href="#">Server Status</a></li>
                     </ul>
-                    <div class="search-element">
-                        <input class="form-control" type="search" placeholder="Search" aria-label="Search" data-width="250">
-                        <button class="btn" type="submit"><i class="fas fa-search"></i></button>
+                </div>
+                <ul class="navbar-nav navbar-right ml-auto">
+                    <li class="dropdown"><a class="nav-link dropdown-toggle nav-link-lg nav-link-user" data-toggle="dropdown" href="#">
+                        <img class="rounded-circle mr-1" src="{{ asset('img/avatar/avatar-1.png') }}" alt="image">
+                        <div class="d-sm-none d-lg-inline-block">Hi, {{ Auth::user()->name }}</div>
+                    </a>
+                    <div class="dropdown-menu dropdown-menu-right">
+                        <a class="dropdown-item has-icon" href="{{ route('dashboard') }}">
+                            <i class="fas fa-home"></i> Dashboard
+                        </a>
+                        <a class="dropdown-item has-icon" href="{{ route('profile.edit') }}">
+                            <i class="fas fa-user"></i> Profile
+                        </a>
+                        <a class="dropdown-item has-icon" href="#">
+                            <i class="fas fa-cog"></i> Settings
+                        </a>
+                        <div class="dropdown-divider"></div>
+                        <!-- Authentication -->
+                        <form method="POST" action="{{ route('logout') }}">
+                            @csrf
+                            <a class="dropdown-item has-icon text-danger" style="cursor: pointer;" :href="route('logout')" onclick="event.preventDefault();this.closest('form').submit();">
+                                <i class="fas fa-sign-out-alt"></i> Logouts
+                            </a>
+                        </form>
+                        {{-- <a href="{{ route('logout') }}" class="dropdown-item has-icon text-danger">
+                            <i class="fas fa-sign-out-alt"></i> Logout
+                        </a> --}}
                     </div>
-                </form>
-                <ul class="navbar-nav navbar-right">
-                    <li class="dropdown"><a href="#" data-toggle="dropdown" class="nav-link dropdown-toggle nav-link-lg nav-link-user">
-                        <img alt="image" src="{{ asset('img/avatar/avatar-1.png') }}" class="rounded-circle mr-1">
-                        <div class="d-sm-none d-lg-inline-block">Hi, User</div></a>
-                        <div class="dropdown-menu dropdown-menu-right">
-                            <a href="#" class="dropdown-item has-icon">
-                                <i class="fas fa-user"></i> Profile
-                            </a>
-                            <a href="#" class="dropdown-item has-icon">
-                                <i class="fas fa-cog"></i> Settings
-                            </a>
-                            <div class="dropdown-divider"></div>
-                            <a href="#" class="dropdown-item has-icon text-danger">
-                                <i class="fas fa-sign-out-alt"></i> Logout
-                            </a>
-                        </div>
-                    </li>
+                </li>
                 </ul>
             </nav>
 
+
+
             <!-- Sidebar -->
-            <div class="main-sidebar">
+            {{-- <div class="main-sidebar">
                 <aside id="sidebar-wrapper">
                     <div class="sidebar-brand">
                         <a href="index.html">Stisla</a>
@@ -90,17 +107,17 @@
                         <!-- Add other sidebar items here -->
                     </ul>
                 </aside>
-            </div>
+            </div> --}}
 
             <!-- Main Content -->
             <div class="main-content">
                 <section class="section">
                     <div class="section-header">
-                        <h1>@yield('header')</h1>
+                        @yield('header')
                     </div>
                     <div class="section-body">
-                        @yield('content')
-                        {{-- {{ $slot }} --}}
+                        {{-- @yield('content') --}}
+                        {{ $slot }}
                     </div>
                 </section>
             </div>
@@ -108,10 +125,11 @@
             <!-- Footer -->
             <footer class="main-footer">
                 <div class="footer-left">
-                    &copy; 2023 <div class="bullet"></div> Design By <a href="https://stisla.com/">Stisla</a>
+                    Copyright &copy; 2025 <div class="bullet"></div> Teman Koding
+                    {{-- <a href="https://stisla.com/">Stisla</a> --}}
                 </div>
                 <div class="footer-right">
-                    2.3.0
+                    1.0
                 </div>
             </footer>
         </div>
@@ -136,6 +154,7 @@
 
     <!-- Page Specific JS File -->
     {{-- <script src="{{ asset('js/page/index.js') }}"></script> --}}
+    @yield('scripts')
 
     <!-- Template JS File -->
     <script src="{{ asset('js/scripts.js') }}"></script>

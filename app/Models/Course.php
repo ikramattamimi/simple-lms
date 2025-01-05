@@ -29,18 +29,26 @@ class Course extends Model
     }
 
     /**
-     * The sections that belong to the course.
+     * The sections that belong to the user.
      */
-    public function sections()
+    public function userSections()
     {
-        return $this->belongsToMany(Section::class, 'user_section')
+        return $this->belongsToMany(User::class, 'user_section')
                     ->withPivot('is_completed', 'completion_date');
     }
 
     /**
-     * The users that belong to the course.
+     * The sections that belong to the course.
      */
-    public function users()
+    // public function sections()
+    // {
+    //     return $this->hasMany(Section::class);
+    // }
+
+    /**
+     * The students that belong to the course.
+     */
+    public function students()
     {
         return $this->belongsToMany(User::class, 'user_course')
                     ->withPivot('is_active');

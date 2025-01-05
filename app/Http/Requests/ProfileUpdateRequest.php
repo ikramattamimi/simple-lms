@@ -25,6 +25,7 @@ class ProfileUpdateRequest extends FormRequest
                 'max:255',
                 Rule::unique(User::class)->ignore($this->user()->id),
             ],
+            'student_class' => ['required_if:user_type,student', 'string', 'max:255'],
         ];
     }
 }

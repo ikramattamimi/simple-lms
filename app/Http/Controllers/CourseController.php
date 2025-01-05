@@ -37,7 +37,7 @@ class CourseController extends Controller
      */
     public function show(Course $course)
     {
-        //
+        return view('course.show', compact('course'));
     }
 
     /**
@@ -62,5 +62,30 @@ class CourseController extends Controller
     public function destroy(Course $course)
     {
         //
+    }
+
+    /**
+     * Enroll the authenticated user in the course.
+     */
+    public function enroll(Course $course)
+    {
+
+        // check if user enrolled
+        if (auth()->user()->courses->contains($course)) {
+            return back()->with('status', 'already_enrolled');
+        }
+
+        auth()->user()->courses()->attach($course);
+        return back()->with('status', 'enrolled');
+    }
+
+    /**
+     * Display the sections of the course.
+     */
+    public function sections(Course $course)
+    {
+        $sections = $course->sections;
+        $courseTitle = $course->title;
+        return view('course.sections', compact('sections', 'courseTitle'));
     }
 }

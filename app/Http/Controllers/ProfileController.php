@@ -18,6 +18,7 @@ class ProfileController extends Controller
     {
         return view('profile.edit', [
             'user' => $request->user(),
+            'classes' => ['XII IPA 1', 'XII IPA 2', 'XII IPA 3', 'XII IPA 4'],
         ]);
     }
 
