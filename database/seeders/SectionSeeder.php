@@ -14,20 +14,26 @@ class SectionSeeder extends Seeder
      */
     public function run(): void
     {
-        DB::table('sections')->insert([
-            'id' => Str::uuid(),
-            'title' => 'Sample Section',
-            'body' => 'This is a sample section body.',
-            'course_id' => DB::table('courses')->first()->id,
-            'created_at' => now(),
-            'updated_at' => now(),
-        ]);
+        $pendahuluan = \App\Models\Chapter::where('title', 'like', '%pendahuluan%')->first();
+        $kegiatanPembelajaran = \App\Models\Chapter::where('title', 'like', '%kegiatan pembelajaran%')->get();
 
-        DB::table('user_section')->insert([
-            'user_id' => DB::table('users')->first()->id,
-            'section_id' => DB::table('sections')->first()->id,
-            'is_completed' => true,
-            'completion_date' => now(),
-        ]);
+        if ($pendahuluan) {
+            $pendahuluan->sections()->createMany([
+                ['title' => 'Profil Modul'],
+                ['title' => 'Deskripsi singkat materi'],
+                ['title' => 'Pemetaan'],
+                ['title' => 'Assesmen'],
+                ['title' => 'Petunjuk Penggunaan Modul'],
+                ['title' => 'Alur Aktivitas'],
+            ]);
+        }
+
+        foreach ($kegiatanPembelajaran as $chapter) {
+            $chapter->sections()->createMany([
+                ['title' => 'Tujuan Pembelajaran'],
+                ['title' => 'Uraian Materi'],
+                ['title' => 'Rangkuman'],
+            ]);
+        }
     }
 }

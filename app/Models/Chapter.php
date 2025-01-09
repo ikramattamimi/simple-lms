@@ -6,9 +6,9 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Str;
 
-class Section extends Model
+class Chapter extends Model
 {
-    /** @use HasFactory<\Database\Factories\SectionFactory> */
+    /** @use HasFactory<\Database\Factories\ChapterFactory> */
     use HasFactory;
 
     protected $primaryKey = 'id';
@@ -17,8 +17,7 @@ class Section extends Model
 
     protected $fillable = [
         'title',
-        'body',
-        'chapter_id',
+        'description',
     ];
 
     // Automatically generate UUID for the primary key
@@ -33,19 +32,19 @@ class Section extends Model
         });
     }
 
-    public function chapter()
+    /**
+     * Get the course that owns the chapter.
+     */
+    public function course()
     {
-        return $this->belongsTo(Chapter::class);
+        return $this->belongsTo(Course::class);
     }
 
-    public function assignments()
+    /**
+     * The sections that belong to the chapter.
+     */
+    public function sections()
     {
-        return $this->hasMany(Assignment::class);
-    }
-
-    public function users()
-    {
-        return $this->belongsToMany(User::class, 'user_section')
-                    ->withPivot('is_completed', 'completion_date');
+        return $this->hasMany(Section::class);
     }
 }

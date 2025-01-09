@@ -15,18 +15,17 @@ return new class extends Migration
             $table->uuid('id')->primary();
             $table->string('title', 255);
             $table->text('body')->nullable();
-            $table->uuid('course_id');
-            $table->foreign('course_id')->references('id')->on('courses')->onDelete('cascade');
+            $table->foreignId('chapter_id')->constrained()->onDelete('cascade');
             $table->timestamps();
         });
 
         Schema::create('user_section', function (Blueprint $table) {
-            $table->uuid('user_id');
-            $table->uuid('section_id');
+            // $table->uuid('user_id');
+            // $table->uuid('section_id');
+            $table->foreignId('user_id')->constrained()->onDelete('cascade');
+            $table->foreignId('section_id')->constrained()->onDelete('cascade');
             $table->boolean('is_completed')->default(false);
             $table->timestamp('completion_date')->nullable();
-            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
-            $table->foreign('section_id')->references('id')->on('sections')->onDelete('cascade');
             $table->primary(['user_id', 'section_id']);
         });
     }
@@ -37,5 +36,6 @@ return new class extends Migration
     public function down(): void
     {
         Schema::dropIfExists('sections');
+        Schema::dropIfExists('user_section');
     }
 };

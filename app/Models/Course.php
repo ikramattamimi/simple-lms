@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Str;
 
 class Course extends Model
 {
@@ -16,8 +17,29 @@ class Course extends Model
     protected $fillable = [
         'title',
         'description',
+        'body',
         'image',
     ];
+
+    // Automatically generate UUID for the primary key
+    protected static function boot()
+    {
+        parent::boot();
+
+        static::creating(function ($model) {
+            if (empty($model->{$model->getKeyName()})) {
+                $model->{$model->getKeyName()} = (string) Str::uuid();
+            }
+        });
+    }
+
+    /**
+     * The chapters that belong to the course.
+     */
+    public function chapters()
+    {
+        return $this->hasMany(Chapter::class);
+    }
 
     /**
      * The assignments that belong to the course.

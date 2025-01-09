@@ -1,6 +1,6 @@
-<x-app-layout>
+<x-admin-layout>
     @section('header')
-        <h1>Dashboard</h1>
+        <h1>Dashboard Admin</h1>
     @endsection
 
     <h2 class="section-title">Modul Saya</h2>
@@ -24,4 +24,4 @@
             </div>
         @endforeach
     </div>
-</x-app-layout>
+</x-admin-layout>

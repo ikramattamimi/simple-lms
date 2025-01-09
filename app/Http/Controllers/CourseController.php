@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\Course;
 use App\Http\Requests\StoreCourseRequest;
 use App\Http\Requests\UpdateCourseRequest;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
 
 class CourseController extends Controller
 {
@@ -21,7 +23,7 @@ class CourseController extends Controller
      */
     public function create()
     {
-        //
+        return view('course.create');
     }
 
     /**
@@ -29,7 +31,27 @@ class CourseController extends Controller
      */
     public function store(StoreCourseRequest $request)
     {
-        //
+        // store if valid
+        if(!$request->validated())
+        {
+            return back()->with('status', 'invalid');
+        }
+
+        // use uuid for image name
+        $imageName = Str::uuid() . '.' . $request->image->extension();
+        $request->file('image')->move(public_path('storage/uploads'), $imageName);
+
+        Course::create([
+            'title' => $request->title,
+            'description' => $request->description,
+            'image' => $imageName,
+        ]);
+
+        // move image to storage
+        // Storage::putFileAs('public/storage/uploads', $request->file('image'), $request->file('image')->getClientOriginalName());
+
+        // redirect to setup page
+        return redirect()->route('course.setup')->with('status', 'course_created');
     }
 
     /**
@@ -45,7 +67,7 @@ class CourseController extends Controller
      */
     public function edit(Course $course)
     {
-        //
+        return view('course.edit', compact('course'));
     }
 
     /**
@@ -53,7 +75,29 @@ class CourseController extends Controller
      */
     public function update(UpdateCourseRequest $request, Course $course)
     {
-        //
+        // store if valid
+        if(!$request->validated())
+        {
+            return back()->with('status', 'invalid');
+        }
+
+        // use uuid for image name
+        // $imageName = Str::uuid() . '.' . $request->image->extension();
+        // $request->file('image')->move(public_path('storage/uploads'), $imageName);
+
+        // dd($request->description);
+        $course->update([
+            'title' => $request->title,
+            'description' => $request->description,
+            'body' => $request->body,
+            // 'image' => $imageName,
+        ]);
+
+        // move image to storage
+        // Storage::putFileAs('public/storage/uploads', $request->file('image'), $request->file('image')->getClientOriginalName());
+
+        // redirect to setup page
+        return redirect()->route('course.setup')->with('status', 'course_updated');
     }
 
     /**
@@ -80,12 +124,26 @@ class CourseController extends Controller
     }
 
     /**
-     * Display the sections of the course.
+     * Display the chapters of the course.
      */
-    public function sections(Course $course)
+    public function chapters(Course $course)
     {
-        $sections = $course->sections;
+        // $openingChapters = $course->chapters->where('title', 'like', '')->first();
+        $openingChapters = $course->chapters->filter(function($chapter) {
+            return $chapter->sections->isEmpty();
+        });
+        // dd($openingChapters);
+        $chapters = $course->chapters;
         $courseTitle = $course->title;
-        return view('course.sections', compact('sections', 'courseTitle'));
+        return view('course.chapters', compact('chapters', 'courseTitle', 'openingChapters', 'course'));
+    }
+
+    /**
+     * Setup the course.
+     */
+    public function setup()
+    {
+        $courses = Course::all();
+        return view('course.setup', compact('courses'));
     }
 }

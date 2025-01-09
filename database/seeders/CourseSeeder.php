@@ -16,21 +16,21 @@ class CourseSeeder extends Seeder
     {
         DB::table('courses')->insert([
             'id' => Str::uuid(),
-            'title' => 'Eco Farming',
-            'description' => 'This is a sample course description.',
+            'title' => 'Ecofarming',
+            'description' => 'E-Modul Pertanian Ramah Lingkungan (Ecofarming).',
             'image' => 'ecofarming-sample.jpg',
             'created_at' => now(),
             'updated_at' => now(),
         ]);
 
-        DB::table('courses')->insert([
-            'id' => Str::uuid(),
-            'title' => 'Modul Beta',
-            'description' => 'Beta testing.',
-            'image' => 'modul-beta.jpg',
-            'created_at' => now(),
-            'updated_at' => now(),
-        ]);
+        // DB::table('courses')->insert([
+        //     'id' => Str::uuid(),
+        //     'title' => 'Modul Beta',
+        //     'description' => 'Beta testing.',
+        //     'image' => 'modul-beta.jpg',
+        //     'created_at' => now(),
+        //     'updated_at' => now(),
+        // ]);
 
         DB::table('user_course')->insert([
             'course_id' => DB::table('courses')->first()->id,

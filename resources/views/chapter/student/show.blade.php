@@ -1,4 +1,4 @@
-<x-app-layout>
+<x-student-layout :openingChapters="$openingChapters" :courseTitle="$courseTitle" :currentChapterId="$chapter->id">
     @section('header')
         <div class="section-header-back">
             <a class="btn btn-icon" href="{{ route('dashboard') }}"><i class="fas fa-arrow-left"></i></a>
@@ -10,4 +10,11 @@
             <div class="breadcrumb-item"><a>Sections</a></div>
         </div>
     @endsection
-</x-app-layout>
+
+    <div class="card">
+        <div class="card-body">
+            {!! $chapter->body !!}
+        </div>
+    </div>
+
+</x-student-layout>

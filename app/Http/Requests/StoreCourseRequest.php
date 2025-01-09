@@ -11,6 +11,10 @@ class StoreCourseRequest extends FormRequest
      */
     public function authorize(): bool
     {
+        // true if user is admin
+        if (\Auth::user()->isAdmin()) {
+            return true;
+        }
         return false;
     }
 
@@ -22,7 +26,9 @@ class StoreCourseRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'title' => 'required|string|max:255',
+            'description' => 'required|string',
+            'image' => 'required|image',
         ];
     }
 }

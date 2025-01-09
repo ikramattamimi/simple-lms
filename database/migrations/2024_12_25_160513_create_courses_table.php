@@ -14,7 +14,9 @@ return new class extends Migration
         Schema::create('courses', function (Blueprint $table) {
             $table->uuid('id')->primary();
             $table->string('title', 255);
-            $table->text('description')->nullable();
+            $table->string('description', 255)->nullable();
+            $table->string('slug', 255)->unique()->nullable();
+            $table->text('body')->nullable();
             $table->string('image')->nullable();
             $table->timestamps();
         });

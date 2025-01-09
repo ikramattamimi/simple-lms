@@ -34,80 +34,69 @@
     </script>
 </head>
 
-<body class="layout-3">
+<body>
 
     <div id="app">
-        <div class="main-wrapper container">
+        <div class="main-wrapper main-wrapper-1">
             <!-- Navbar -->
             <div class="navbar-bg"></div>
             <nav class="navbar navbar-expand-lg main-navbar">
-                <a class="navbar-brand sidebar-gone-hide" href="index.html">Iis Masriah</a>
-                <a class="nav-link sidebar-gone-show" data-toggle="sidebar" href="#"><i class="fas fa-bars"></i></a>
-                <div class="nav-collapse">
-                    <a class="sidebar-gone-show nav-collapse-toggle nav-link" href="#">
-                        <i class="fas fa-ellipsis-v"></i>
-                    </a>
-                    <ul class="navbar-nav">
-                        <li class="nav-item active"><a class="nav-link" href="#">Application</a></li>
-                        <li class="nav-item"><a class="nav-link" href="#">Report Something</a></li>
-                        <li class="nav-item"><a class="nav-link" href="#">Server Status</a></li>
-                    </ul>
-                </div>
+                <ul class="navbar-nav mr-3">
+                    <li><a class="nav-link nav-link-lg" data-toggle="sidebar" href="#"><i class="fas fa-bars"></i></a></li>
+                    <li><a class="nav-link nav-link-lg d-sm-none" data-toggle="search" href="#"><i class="fas fa-search"></i></a></li>
+                </ul>
                 <ul class="navbar-nav navbar-right ml-auto">
                     <li class="dropdown"><a class="nav-link dropdown-toggle nav-link-lg nav-link-user" data-toggle="dropdown" href="#">
-                        <img class="rounded-circle mr-1" src="{{ asset('img/avatar/avatar-1.png') }}" alt="image">
-                        <div class="d-sm-none d-lg-inline-block">Hi, {{ Auth::user()->name }}</div>
-                    </a>
-                    <div class="dropdown-menu dropdown-menu-right">
-                        <a class="dropdown-item has-icon" href="{{ route('dashboard') }}">
-                            <i class="fas fa-home"></i> Dashboard
+                            <img class="rounded-circle mr-1" src="{{ asset('img/avatar/avatar-1.png') }}" alt="image">
+                            <div class="d-sm-none d-lg-inline-block">Hi, {{ Auth::user()->name }}</div>
                         </a>
-                        <a class="dropdown-item has-icon" href="{{ route('profile.edit') }}">
-                            <i class="fas fa-user"></i> Profile
-                        </a>
-                        <a class="dropdown-item has-icon" href="#">
-                            <i class="fas fa-cog"></i> Settings
-                        </a>
-                        <div class="dropdown-divider"></div>
-                        <!-- Authentication -->
-                        <form method="POST" action="{{ route('logout') }}">
-                            @csrf
-                            <a class="dropdown-item has-icon text-danger" style="cursor: pointer;" :href="route('logout')" onclick="event.preventDefault();this.closest('form').submit();">
-                                <i class="fas fa-sign-out-alt"></i> Logouts
+                        <div class="dropdown-menu dropdown-menu-right">
+                            <a class="dropdown-item has-icon" href="{{ route('dashboard') }}">
+                                <i class="fas fa-home"></i> Dashboard
                             </a>
-                        </form>
-                        {{-- <a href="{{ route('logout') }}" class="dropdown-item has-icon text-danger">
-                            <i class="fas fa-sign-out-alt"></i> Logout
-                        </a> --}}
-                    </div>
-                </li>
+                            <a class="dropdown-item has-icon" href="{{ route('profile.edit') }}">
+                                <i class="fas fa-user"></i> Profile
+                            </a>
+                            <a class="dropdown-item has-icon" href="#">
+                                <i class="fas fa-cog"></i> Settings
+                            </a>
+                            <div class="dropdown-divider"></div>
+                            <!-- Authentication -->
+                            <form method="POST" action="{{ route('logout') }}">
+                                @csrf
+                                <a class="dropdown-item has-icon text-danger" style="cursor: pointer;" :href="route('logout')" onclick="event.preventDefault();this.closest('form').submit();">
+                                    <i class="fas fa-sign-out-alt"></i> Logouts
+                                </a>
+                            </form>
+                            {{-- <a href="{{ route('logout') }}" class="dropdown-item has-icon text-danger">
+                        <i class="fas fa-sign-out-alt"></i> Logout
+                    </a> --}}
+                        </div>
+                    </li>
                 </ul>
             </nav>
 
-
-
             <!-- Sidebar -->
-            {{-- <div class="main-sidebar">
+            <div class="main-sidebar sidebar-style-2">
                 <aside id="sidebar-wrapper">
                     <div class="sidebar-brand">
-                        <a href="index.html">Stisla</a>
+                        <a href="index.html">Iis Masriah</a>
                     </div>
                     <div class="sidebar-brand sidebar-brand-sm">
                         <a href="index.html">St</a>
                     </div>
                     <ul class="sidebar-menu">
                         <li class="menu-header">Dashboard</li>
-                        <li class="nav-item dropdown">
-                            <a href="#" class="nav-link has-dropdown"><i class="fas fa-fire"></i><span>Dashboard</span></a>
-                            <ul class="dropdown-menu">
-                                <li><a class="nav-link" href="index-0.html">General Dashboard</a></li>
-                                <li><a class="nav-link" href="index.html">Ecommerce Dashboard</a></li>
-                            </ul>
+                        <li class="dropdown {{ request()->routeIs('dashboard') ? 'active' : '' }}">
+                            <a class="nav-link" href="{{ route('dashboard') }}"><i class="fas fa-fire"></i><span>Dashboard</span></a>
                         </li>
-                        <!-- Add other sidebar items here -->
+                        <li class="menu-header">Master Data</li>
+                        <li class="dropdown {{ request()->routeIs('course.setup') ? 'active' : '' }}">
+                            <a class="nav-link" href="{{ route('course.setup') }}"><i class="fas fa-th-large"></i><span>Modules</span></a>
+                        </li>
                     </ul>
                 </aside>
-            </div> --}}
+            </div>
 
             <!-- Main Content -->
             <div class="main-content">
@@ -151,6 +140,11 @@
     <script src="{{ asset('modules/owlcarousel2/dist/owl.carousel.min.js') }}"></script>
     <script src="{{ asset('modules/summernote/summernote-bs4.js') }}"></script>
     <script src="{{ asset('modules/chocolat/dist/js/jquery.chocolat.min.js') }}"></script>
+
+    <script src="{{ asset('modules/datatables/datatables.min.js') }}"></script>
+    <script src="{{ asset('modules/datatables/DataTables-1.10.16/js/dataTables.bootstrap4.min.js') }}"></script>
+    <script src="{{ asset('modules/datatables/Select-1.2.4/js/dataTables.select.min.js') }}"></script>
+    <script src="{{ asset('modules/jquery-ui/jquery-ui.min.js') }}"></script>
 
     <!-- Page Specific JS File -->
     {{-- <script src="{{ asset('js/page/index.js') }}"></script> --}}

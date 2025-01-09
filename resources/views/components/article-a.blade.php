@@ -1,4 +1,4 @@
-@props(['title', 'description', 'image', 'courseid'])
+@props(['title', 'description', 'image', 'courseid', 'enrolled' => false])
 
 <article class="article">
     <div class="article-header">
@@ -11,7 +11,11 @@
     <div class="article-details">
         <p>{{ $description }}</p>
         <div class="article-cta">
-            <a class="btn btn-primary" href="{{ route('course.show', ['course' => $courseid]) }}">Selengkapnya</a>
+            @if ($enrolled)
+                <a class="btn btn-primary" href="{{ route('course.chapters', ['course' => $courseid]) }}">Lanjut Belajar</a>
+            @else
+                <a class="btn btn-primary" href="{{ route('course.show', ['course' => $courseid]) }}">Selengkapnya</a>
+            @endif
         </div>
     </div>
 </article>

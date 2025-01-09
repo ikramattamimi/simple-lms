@@ -4,17 +4,13 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class UpdateCourseRequest extends FormRequest
+class StoreChapterRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
      */
     public function authorize(): bool
     {
-        // true if user is admin
-        if (\Auth::user()->isAdmin()) {
-            return true;
-        }
         return false;
     }
 
@@ -26,9 +22,7 @@ class UpdateCourseRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'title' => 'required|string|max:255',
-            'description' => 'string',
-            'body' => 'required|string',
+            //
         ];
     }
 }

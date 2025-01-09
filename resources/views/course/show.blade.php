@@ -26,7 +26,7 @@
             <div class="card">
                 <div class="card-body text-center">
                     @if ($course->students->contains(auth()->user()))
-                        <a class="btn btn-primary col-12" href="{{ route('course.sections', ['course' => $course->id]) }}">Lanjutkan Belajar</a>
+                        <a class="btn btn-primary col-12" href="{{ route('course.chapters', ['course' => $course->id]) }}">Lanjut Belajar</a>
                     @else
                         <a class="btn btn-primary col-12" href="{{ route('course.enroll', ['course' => $course->id]) }}">Daftar ke Modul Ini</a>
                     @endif

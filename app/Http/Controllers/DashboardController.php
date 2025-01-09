@@ -16,6 +16,10 @@ class DashboardController extends Controller
         $enrolledCourses = auth()->user()->courses;
 
         // Pass the courses to the view
-        return view('dashboard', compact('courses', 'enrolledCourses'));
+        if (auth()->user()->isAdmin()) {
+            return view('dashboard.admin', compact('courses', 'enrolledCourses'));
+        } else {
+            return view('dashboard', compact('courses', 'enrolledCourses'));
+        }
     }
 }

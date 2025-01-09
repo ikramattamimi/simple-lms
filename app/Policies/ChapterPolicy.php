@@ -2,11 +2,11 @@
 
 namespace App\Policies;
 
-use App\Models\Assignment;
+use App\Models\Chapter;
 use App\Models\User;
 use Illuminate\Auth\Access\Response;
 
-class AssignmentPolicy
+class ChapterPolicy
 {
     /**
      * Determine whether the user can view any models.
@@ -19,7 +19,7 @@ class AssignmentPolicy
     /**
      * Determine whether the user can view the model.
      */
-    public function view(User $user, Assignment $assignment): bool
+    public function view(User $user, Chapter $chapter): bool
     {
         return false;
     }
@@ -35,7 +35,7 @@ class AssignmentPolicy
     /**
      * Determine whether the user can update the model.
      */
-    public function update(User $user, Assignment $assignment): bool
+    public function update(User $user, Chapter $chapter): bool
     {
         return false;
     }
@@ -43,7 +43,7 @@ class AssignmentPolicy
     /**
      * Determine whether the user can delete the model.
      */
-    public function delete(User $user, Assignment $assignment): bool
+    public function delete(User $user, Chapter $chapter): bool
     {
         return false;
     }
@@ -51,7 +51,7 @@ class AssignmentPolicy
     /**
      * Determine whether the user can restore the model.
      */
-    public function restore(User $user, Assignment $assignment): bool
+    public function restore(User $user, Chapter $chapter): bool
     {
         return false;
     }
@@ -59,7 +59,7 @@ class AssignmentPolicy
     /**
      * Determine whether the user can permanently delete the model.
      */
-    public function forceDelete(User $user, Assignment $assignment): bool
+    public function forceDelete(User $user, Chapter $chapter): bool
     {
         return false;
     }
