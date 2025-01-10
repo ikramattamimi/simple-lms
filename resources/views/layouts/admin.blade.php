@@ -92,7 +92,13 @@
                         </li>
                         <li class="menu-header">Master Data</li>
                         <li class="dropdown {{ request()->routeIs('course.setup') ? 'active' : '' }}">
-                            <a class="nav-link" href="{{ route('course.setup') }}"><i class="fas fa-th-large"></i><span>Modules</span></a>
+                            <a class="nav-link" href="{{ route('courses.setup') }}"><i class="fas fa-th-large"></i><span>Course</span></a>
+                        </li>
+                        <li class="dropdown {{ request()->routeIs('chapter.setup') ? 'active' : '' }}">
+                            <a class="nav-link" href="{{ route('chapters.setup') }}"><i class="fas fa-th-large"></i><span>Chapter</span></a>
+                        </li>
+                        <li class="dropdown {{ request()->routeIs('section.setup') ? 'active' : '' }}">
+                            <a class="nav-link" href="{{ route('sections.setup') }}"><i class="fas fa-th-large"></i><span>Section</span></a>
                         </li>
                     </ul>
                 </aside>

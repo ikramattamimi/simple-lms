@@ -1,5 +1,3 @@
-@props(['openingChapters', 'courseTitle' => 'Course Title', 'currentChapterId' => ''])
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -10,6 +8,16 @@
     <!-- General CSS Files -->
     <link href="{{ asset('modules/bootstrap/css/bootstrap.min.css') }}" rel="stylesheet">
     <link href="{{ asset('modules/fontawesome/css/all.min.css') }}" rel="stylesheet">
+    <style>
+        .nav-link-sections {
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            max-width: 200px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+    </style>
 
     <!-- CSS Libraries -->
     <link href="{{ asset('modules/jqvmap/dist/jqvmap.min.css') }}" rel="stylesheet">
@@ -51,7 +59,7 @@
                 <ul class="navbar-nav navbar-right ml-auto">
                     <li class="dropdown"><a class="nav-link dropdown-toggle nav-link-lg nav-link-user" data-toggle="dropdown" href="#">
                             <img class="rounded-circle mr-1" src="{{ asset('img/avatar/avatar-1.png') }}" alt="image">
-                            <div class="d-sm-none d-lg-inline-block">Hi, {{ Auth::user()->name }}</div>
+                            <div class="d-sm-none d-lg-inline-block">Hi</div>
                         </a>
                         <div class="dropdown-menu dropdown-menu-right">
                             <a class="dropdown-item has-icon" href="{{ route('dashboard') }}">
@@ -79,46 +87,14 @@
                 </ul>
             </nav>
 
-            <!-- Sidebar -->
-            <div class="main-sidebar sidebar-style-2">
-                <aside id="sidebar-wrapper">
-                    <div class="row align-items-center my-4">
-                        <div class="col-2">
-                            <a class="btn btn-icon" href="{{ route('dashboard') }}"><i class="fas fa-arrow-left mr-4"></i></a>
-                        </div>
-                        <div class="col">
-                            <p class="course-title">{{ $courseTitle }}</p>
-                        </div>
-                    </div>
-                    <div class="sidebar-brand sidebar-brand-sm">
-                        <a href="index.html">St</a>
-                    </div>
-                    <ul class="sidebar-menu">
-                        <li class="menu-header">Pembuka</li>
-                        @foreach ($openingChapters as $ch)
-                            <li class="dropdown {{ $ch->id == $currentChapterId ? 'active' : '' }}">
-                                <a href="{{ route('chapter.student.show', ['chapter' => $ch->id]) }}" class="nav-link">
-                                    <i class="fas fa-book"></i><span>{{ $ch->title }}</span>
-                                </a>
-                            </li>
-                        @endforeach
-                        <li class="dropdown {{ request()->routeIs('dashboard') ? 'active' : '' }}">
-                            <a class="nav-link" href="{{ route('dashboard') }}"><i class="fas fa-fire"></i><span>Dashboard</span></a>
-                        </li>
-                        <li class="menu-header">Master Data</li>
-                        <li class="dropdown {{ request()->routeIs('course.setup') ? 'active' : '' }}">
-                            <a class="nav-link" href="{{ route('course.setup') }}"><i class="fas fa-th-large"></i><span>Modules</span></a>
-                        </li>
-                    </ul>
-                </aside>
-            </div>
+            <x-sidebar-student></x-sidebar-student>
 
             <!-- Main Content -->
             <div class="main-content">
                 <section class="section">
-                    {{-- <div class="section-header">
+                    <div class="section-header">
                         @yield('header')
-                    </div> --}}
+                    </div>
                     <div class="section-body">
                         {{-- @yield('content') --}}
                         {{ $slot }}

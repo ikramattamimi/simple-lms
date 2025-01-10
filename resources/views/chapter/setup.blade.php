@@ -10,11 +10,11 @@
         <h1>Setup Modules</h1>
     @endsection
 
-    <div class="col-12">
+    <div class="container">
         <div class="card">
             <div class="card-body">
                 <div class="d-flex justify-content-end mb-3">
-                    <a href="{{ route('course.create') }}" class="btn btn-primary">
+                    <a href="{{ route('courses.create') }}" class="btn btn-primary">
                         <i class="fas fa-plus"></i> Add
                     </a>
                 </div>
@@ -26,19 +26,34 @@
                                     #
                                 </th>
                                 <th>Title</th>
-                                <th>Description</th>
-                                <th>Image</th>
+                                <th>Is Active</th>
                                 <th>Action</th>
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach ($courses as $course)
+                            @foreach ($chapters as $chapter)
                                 <tr>
                                     <td>{{ $loop->iteration }}</td>
-                                    <td>{{ $course->title }}</td>
-                                    <td>{!! $course->description !!}</td>
-                                    <td><img class="rounded" data-toggle="tooltip" src="{{ asset('storage/uploads/' . $course->image) }}" title="{{ $course->title }}" alt="image" width="100"></td>
-                                    <td><a class="btn btn-secondary" href="#">Detail</a></td>
+                                    <td>{{ $chapter->title }}</td>
+                                    <td>
+                                        <input type="checkbox" {{ $chapter->is_active ? 'checked' : '' }} disabled>
+                                    </td>
+                                    <td>
+                                        <a class="btn btn-primary" href="{{ route('chapters.edit', $chapter->id) }}">Edit</a>
+                                        @if ($chapter->is_active)
+                                            <form action="{{ route('chapters.deactivate', $chapter->id) }}" method="POST" style="display:inline;">
+                                                @csrf
+                                                @method('PATCH')
+                                                <button type="submit" class="btn btn-warning">Deactivate</button>
+                                            </form>
+                                        @else
+                                            <form action="{{ route('chapters.activate', $chapter->id) }}" method="POST" style="display:inline;">
+                                                @csrf
+                                                @method('PATCH')
+                                                <button type="submit" class="btn btn-info">Activate</button>
+                                            </form>
+                                        @endif
+                                    </td>
                                 </tr>
                             @endforeach
                         </tbody>

@@ -32,8 +32,7 @@ class CourseController extends Controller
     public function store(StoreCourseRequest $request)
     {
         // store if valid
-        if(!$request->validated())
-        {
+        if (!$request->validated()) {
             return back()->with('status', 'invalid');
         }
 
@@ -51,7 +50,7 @@ class CourseController extends Controller
         // Storage::putFileAs('public/storage/uploads', $request->file('image'), $request->file('image')->getClientOriginalName());
 
         // redirect to setup page
-        return redirect()->route('course.setup')->with('status', 'course_created');
+        return redirect()->route('courses.setup')->with('status', 'course_created');
     }
 
     /**
@@ -76,8 +75,7 @@ class CourseController extends Controller
     public function update(UpdateCourseRequest $request, Course $course)
     {
         // store if valid
-        if(!$request->validated())
-        {
+        if (!$request->validated()) {
             return back()->with('status', 'invalid');
         }
 
@@ -97,7 +95,7 @@ class CourseController extends Controller
         // Storage::putFileAs('public/storage/uploads', $request->file('image'), $request->file('image')->getClientOriginalName());
 
         // redirect to setup page
-        return redirect()->route('course.setup')->with('status', 'course_updated');
+        return redirect()->route('courses.setup')->with('status', 'course_updated');
     }
 
     /**
@@ -128,14 +126,8 @@ class CourseController extends Controller
      */
     public function chapters(Course $course)
     {
-        // $openingChapters = $course->chapters->where('title', 'like', '')->first();
-        $openingChapters = $course->chapters->filter(function($chapter) {
-            return $chapter->sections->isEmpty();
-        });
-        // dd($openingChapters);
         $chapters = $course->chapters;
-        $courseTitle = $course->title;
-        return view('course.chapters', compact('chapters', 'courseTitle', 'openingChapters', 'course'));
+        return view('course.chapters', compact('chapters', 'course'));
     }
 
     /**

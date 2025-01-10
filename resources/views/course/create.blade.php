@@ -13,7 +13,7 @@
                 <h4>Simple Summernote</h4>
             </div>
             <div class="card-body">
-                <form action="{{ route('course.store') }}" method="post" enctype="multipart/form-data">
+                <form action="{{ route('courses.store') }}" method="post" enctype="multipart/form-data">
                     @csrf
                     @method('post')
                     <div class="form-group row mb-4">

@@ -11,6 +11,10 @@ class StoreSectionRequest extends FormRequest
      */
     public function authorize(): bool
     {
+        // true if user is admin
+        if (\Auth::user()->isAdmin()) {
+            return true;
+        }
         return false;
     }
 
@@ -22,7 +26,11 @@ class StoreSectionRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'chapter_id' => 'required|uuid',
+            'title' => 'required|string|max:255',
+            'body' => 'string',
+            'sequence' => 'required|integer',
+            'is_active' => 'boolean|default:true',
         ];
     }
 }

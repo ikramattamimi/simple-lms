@@ -19,16 +19,27 @@ class Course extends Model
         'description',
         'body',
         'image',
+        'slug'
     ];
 
-    // Automatically generate UUID for the primary key
     protected static function boot()
     {
         parent::boot();
 
         static::creating(function ($model) {
+            // Automatically generate UUID for the primary key
             if (empty($model->{$model->getKeyName()})) {
                 $model->{$model->getKeyName()} = (string) Str::uuid();
+            }
+
+            // Generate Slug
+            $model->slug = Str::slug($model->title);
+
+            // Memastikan slug unik
+            $count = 1;
+            while (static::where('slug', $model->slug)->exists()) {
+                $model->slug = Str::slug($model->title) . '-' . $count;
+                $count++;
             }
         });
     }

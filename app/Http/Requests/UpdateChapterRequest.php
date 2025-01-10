@@ -11,6 +11,9 @@ class UpdateChapterRequest extends FormRequest
      */
     public function authorize(): bool
     {
+        if ($this->user()->isAdmin()) {
+            return true;
+        }
         return false;
     }
 
@@ -22,7 +25,9 @@ class UpdateChapterRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'title' => 'required|string|max:255',
+            'description' => 'nullable|string',
+            'is_active' => 'boolean'
         ];
     }
 }

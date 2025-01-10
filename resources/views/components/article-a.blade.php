@@ -5,16 +5,16 @@
         <div class="article-image" data-background="{{ asset('storage/uploads/' . $image) }}">
         </div>
         <div class="article-title">
-            <h2><a href="{{ route('course.show', ['course' => $courseid]) }}">{{ $title }}</a></h2>
+            <h2><a href="{{ route('courses.show', ['course' => $courseid]) }}">{{ $title }}</a></h2>
         </div>
     </div>
     <div class="article-details">
         <p>{{ $description }}</p>
         <div class="article-cta">
             @if ($enrolled)
-                <a class="btn btn-primary" href="{{ route('course.chapters', ['course' => $courseid]) }}">Lanjut Belajar</a>
+                <a class="btn btn-primary" href="{{ route('courses.chapters', ['course' => $courseid]) }}">Lanjut Belajar</a>
             @else
-                <a class="btn btn-primary" href="{{ route('course.show', ['course' => $courseid]) }}">Selengkapnya</a>
+                <a class="btn btn-primary" href="{{ route('courses.show', ['course' => $courseid]) }}">Selengkapnya</a>
             @endif
         </div>
     </div>

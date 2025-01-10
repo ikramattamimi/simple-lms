@@ -45,7 +45,7 @@ class ChapterController extends Controller
      */
     public function edit(Chapter $chapter)
     {
-        //
+        return view('chapter.edit', compact('chapter'));
     }
 
     /**
@@ -53,7 +53,14 @@ class ChapterController extends Controller
      */
     public function update(UpdateChapterRequest $request, Chapter $chapter)
     {
-        //
+        if(!$request->validated())
+        {
+            return back()->with('status', 'invalid');
+        }
+
+        $chapter->update($request->validated());
+        // return redirect()->route('chapters.setup')->with('status', 'updated');
+        return back()->with('status', 'updated');
     }
 
     /**
@@ -78,10 +85,36 @@ class ChapterController extends Controller
      */
     public function chapter(Chapter $chapter)
     {
-        $openingChapters = $chapter->course->chapters->filter(function($ch) {
-            return $ch->sections->isEmpty();
-        });
-        $courseTitle = $chapter->course->title;
-        return view('chapter.student.show', compact('chapter', 'courseTitle', 'openingChapters'));
+        return view('chapter.student.show', compact('chapter'));
+    }
+
+    /**
+     * Activates the chapter.
+     *
+     * This function sets the chapter's `is_active` attribute to true.
+     *
+     * @param Chapter $chapter
+     * @return void
+     */
+    public function activate(Chapter $chapter)
+    {
+        $chapter->is_active = true;
+        $chapter->save();
+        return back()->with('status', 'success');
+    }
+
+    /**
+     * Deactivates the chapter.
+     *
+     * This function sets the chapter's `is_active` attribute to false.
+     *
+     * @param Chapter $chapter
+     * @return void
+     */
+    public function deactivate(Chapter $chapter)
+    {
+        $chapter->is_active = false;
+        $chapter->save();
+        return back()->with('status', 'success');
     }
 }

@@ -29,9 +29,12 @@ $("[data-checkboxes]").each(function() {
 });
 
 $("#table-1").dataTable({
-  "columnDefs": [
-    { "sortable": false, "targets": [2,3] }
-  ]
+    "pageLength": 20,
+    "lengthMenu": [10, 20, 30],
+    "columnDefs": [
+        { "sortable": true }
+    ],
+    "order": [[1, 'asc']]
 });
 $("#table-2").dataTable({
   "columnDefs": [

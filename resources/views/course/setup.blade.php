@@ -14,7 +14,7 @@
         <div class="card">
             <div class="card-body">
                 <div class="d-flex justify-content-end mb-3">
-                    <a href="{{ route('course.create') }}" class="btn btn-primary">
+                    <a href="{{ route('courses.create') }}" class="btn btn-primary">
                         <i class="fas fa-plus"></i> Add
                     </a>
                 </div>
@@ -38,7 +38,7 @@
                                     <td>{{ $course->title }}</td>
                                     <td>{!! $course->description !!}</td>
                                     <td><img class="rounded" data-toggle="tooltip" src="{{ asset('storage/uploads/' . $course->image) }}" title="{{ $course->title }}" alt="image" width="100"></td>
-                                    <td><a class="btn btn-secondary" href="{{ route('course.edit', ['course' => $course->id]) }}">Detail</a></td>
+                                    <td><a class="btn btn-secondary" href="{{ route('courses.edit', ['course' => $course->id]) }}">Detail</a></td>
                                 </tr>
                             @endforeach
                         </tbody>

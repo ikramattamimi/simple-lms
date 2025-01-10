@@ -11,6 +11,9 @@ class UpdateSectionRequest extends FormRequest
      */
     public function authorize(): bool
     {
+        if ($this->user()->isAdmin()) {
+            return true;
+        }
         return false;
     }
 
@@ -22,7 +25,11 @@ class UpdateSectionRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'title' => 'required|string|max:255',
+            'body' => 'nullable|string',
+            'is_active' => 'boolean',
+            'sequence' => 'numeric',
+            'chapter_id' => 'uuid'
         ];
     }
 }

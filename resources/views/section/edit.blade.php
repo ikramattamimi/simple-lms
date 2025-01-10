@@ -4,32 +4,38 @@
     @endsection
 
     @section('header')
-        <h1>Edit Course</h1>
+        <div class="container">
+            <h1>Edit section</h1>
+        </div>
     @endsection
 
-    <div class="col-12">
+    <div class="container">
         <div class="card">
             <div class="card-header">
-                <h4>Edit Course</h4>
+                <h4>Edit section</h4>
             </div>
             <div class="card-body">
-                <form action="{{ route('courses.update', $course->id) }}" method="post" enctype="multipart/form-data">
+                <form action="{{ route('sections.update', $section->id) }}" method="post" enctype="multipart/form-data">
                     @csrf
                     @method('put')
                     <div class="form-group row mb-4">
-                        <label class="col-form-label text-md-right col-12 col-md-3 col-lg-3">Title</label>
+                        <label class="col-form-label text-md-right col-12 col-md-3 col-lg-3">Chapter</label>
                         <div class="col-sm-12 col-md-7">
-                            <input class="form-control @error('title') is-invalid @enderror" type="text" name="title" value="{{ old('title', $course->title) }}">
-                            @error('title')
+                            <select class="form-control @error('chapter_id') is-invalid @enderror" name="chapter_id">
+                                @foreach($chapters as $chapter)
+                                    <option value="{{ $chapter->id }}" {{ old('chapter_id', $section->chapter_id) == $chapter->id ? 'selected' : '' }}>{{ $chapter->title }}</option>
+                                @endforeach
+                            </select>
+                            @error('chapter_id')
                                 <div class="invalid-feedback">{{ $message }}</div>
                             @enderror
                         </div>
                     </div>
                     <div class="form-group row mb-4">
-                        <label class="col-form-label text-md-right col-12 col-md-3 col-lg-3">Description</label>
+                        <label class="col-form-label text-md-right col-12 col-md-3 col-lg-3">Title</label>
                         <div class="col-sm-12 col-md-7">
-                            <textarea class="form-control @error('description') is-invalid @enderror" name="description">{{ old('description', $course->description) }}</textarea>
-                            @error('description')
+                            <input class="form-control @error('title') is-invalid @enderror" type="text" name="title" value="{{ old('title', $section->title) }}">
+                            @error('title')
                                 <div class="invalid-feedback">{{ $message }}</div>
                             @enderror
                         </div>
@@ -37,27 +43,24 @@
                     <div class="form-group row mb-4">
                         <label class="col-form-label text-md-right col-12 col-md-3 col-lg-3">Body</label>
                         <div class="col-sm-12 col-md-7">
-                            <textarea class="summernote @error('body') is-invalid @enderror" name="body">{{ old('body', $course->body) }}</textarea>
+                            <textarea class="summernote form-control @error('body') is-invalid @enderror" name="body">{{ old('body', $section->body) }}</textarea>
                             @error('body')
                                 <div class="invalid-feedback">{{ $message }}</div>
                             @enderror
                         </div>
                     </div>
                     <div class="form-group row mb-4">
-                        <label class="col-form-label text-md-right col-12 col-md-3 col-lg-3">Image</label>
+                        <label class="col-form-label text-md-right col-12 col-md-3 col-lg-3">Sequence</label>
                         <div class="col-sm-12 col-md-7">
-                            <div class="custom-file">
-                                <input type="file" class="custom-file-input @error('image') is-invalid @enderror" id="customFile" name="image">
-                                <label class="custom-file-label" for="customFile">Choose file</label>
-                                @error('image')
-                                    <div class="invalid-feedback">{{ $message }}</div>
-                                @enderror
-                            </div>
+                            <input class="form-control @error('sequence') is-invalid @enderror" type="number" name="sequence" value="{{ old('sequence', $section->sequence) }}">
+                            @error('sequence')
+                                <div class="invalid-feedback">{{ $message }}</div>
+                            @enderror
                         </div>
                     </div>
                     <div class="form-group row mb-4">
                         <div class="col-sm-12 col-md-7 offset-md-3">
-                            <button type="submit" class="btn btn-primary">Update Course</button>
+                            <button type="submit" class="btn btn-primary">Update section</button>
                         </div>
                     </div>
                 </form>

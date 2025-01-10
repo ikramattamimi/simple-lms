@@ -1,40 +1,31 @@
 <?php
 
-use App\Http\Controllers\ProfileController;
-use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\DashboardController;
-use App\Http\Controllers\CourseController;
-use App\Http\Controllers\ChapterController;
+use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
     return redirect('/dashboard');
 });
 
+// Guest Routes
+require __DIR__ . '/auth.php';
 
+
+// Student Routes
+require __DIR__ . '/student.php';
+
+
+// Authenticated Routes
 Route::middleware('auth')->group(function () {
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
-    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
-    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
-    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+    // Profile Routes
+    require __DIR__ . '/profile.php';
 
-    Route::get('/courses/{course}/enroll', [CourseController::class, 'enroll'])->name('course.enroll');
-    Route::get('/show-courses/{course}', [CourseController::class, 'show'])->name('course.show');
-
-    Route::get('/courses/{course}', [CourseController::class, 'chapters'])->name('course.chapters');
-    Route::get('/chapter/{chapter}', [ChapterController::class, 'chapter'])->name('chapter.student.show');
+    // Admin Routes
+    Route::middleware('admin')->prefix('admin')->name('admin.')->group(function () {
+        require __DIR__ . '/admin/courses.php';
+        require __DIR__ . '/admin/chapters.php';
+        require __DIR__ . '/admin/sections.php';
+    });
 });
-
-Route::middleware(['auth', 'admin'])->group(function () {
-    Route::get('/setup-courses', [CourseController::class, 'setup'])->name('course.setup');
-    Route::get('/edit-course/{course}', [CourseController::class, 'edit'])->name('course.edit');
-    Route::get('/add-course', [CourseController::class, 'create'])->name('course.create');
-    Route::put('/update-course/{course}', [CourseController::class, 'update'])->name('course.update');
-
-    Route::get('/setup-chapters', [ChapterController::class, 'setup'])->name('chapter.setup');
-    Route::get('/edit-chapter/{chapter}', [ChapterController::class, 'edit'])->name('chapter.edit');
-    Route::get('/add-chapter', [ChapterController::class, 'create'])->name('chapter.create');
-});
-Route::post('/store-course', [CourseController::class, 'store'])->name('course.store');
-
-require __DIR__.'/auth.php';
